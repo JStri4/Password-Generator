@@ -60,10 +60,16 @@ def GenPassword(length):
     
     return password
 
+def Output():
+    global password
+    password = GenPassword(passLength)
+    print('Your password is: ' + password)
+    
+
 Welcome()
 GetPassLength()
-password = GenPassword(passLength)
-print('Your password is: ' + password)
+Output()
+
 
 
 
