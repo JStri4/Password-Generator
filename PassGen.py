@@ -1,5 +1,6 @@
 import random
 import string
+from pathlib import Path
 from tkinter import *
 from tkinter import messagebox
 
@@ -42,8 +43,11 @@ def GetPassLength():
     
     try:
         passLength = int(passLength)
-        if passLength != type(int):
+        if passLength == type(int):
             print("Checkpoint 1")
+        else:
+            # should not occur
+            print("Checkpoint 2")
     except ValueError:
         print("Please enter an integer...")
         GetPassLength()
@@ -65,11 +69,14 @@ def Output():
     password = GenPassword(passLength)
     print('Your password is: ' + password)
     
+def SavePassword():
+    password_path = Path(r"E:\Users\Jayden\Desktop\Code\Python\Password Generator\Passwords.txt", 'r+')
+
 
 Welcome()
 GetPassLength()
 Output()
-
+SavePassword()
 
 
 
