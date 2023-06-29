@@ -1,5 +1,6 @@
 import random
 import string
+import os.path
 from pathlib import Path
 from tkinter import *
 from tkinter import messagebox
@@ -37,22 +38,13 @@ def Welcome():
 passLength = 0
 
 def GetPassLength():
-    global passLength
-    passLength = int(input("enter the length of the password: "))
-    passLength = int(passLength)
-    
-    try:
-        passLength = int(passLength)
-        if passLength == type(int):
-            print("Checkpoint 1")
-        else:
-            # should not occur
-            print("Checkpoint 2")
-    except ValueError:
-        print("Please enter an integer...")
-        GetPassLength()
-        
-    return passLength
+    while True:
+        try:    
+            global passLength
+            passLength = int(input("enter the length of the password: "))
+            return passLength
+        except ValueError:
+            print("Please enter an integer...")
     
 def GenPassword(length):
     
@@ -70,7 +62,8 @@ def Output():
     print('Your password is: ' + password)
     
 def SavePassword():
-    password_path = Path(r"E:\Users\Jayden\Desktop\Code\Python\Password Generator\Passwords.txt", 'r+')
+    #password_path = Path(r"E:\Users\Jayden\Desktop\Code\Python\Password Generator\Passwords.txt", 'r+')
+    Ledger = open('Passwords.txt', 'a+')
 
 
 Welcome()
@@ -83,10 +76,11 @@ SavePassword()
 
 
 
+
 # file io
 # syntax - animals = open('animals.txt', 'a+')
 # r = open for read (default)
-# w = open for write, truncate
+# w = open for write, truncate (wipes existing contents)
 # r+ = open for read/write
 # w+ = open for read/write, truncate
 # a+ = open for read/append
