@@ -1,7 +1,6 @@
 import random
 import string
-import os.path
-from pathlib import Path
+import os
 from tkinter import *
 from tkinter import messagebox
 
@@ -37,6 +36,7 @@ def Welcome():
 
 passLength = 0
 
+#Make a condition to limit the amount of characters, like 24 characters
 def GetPassLength():
     while True:
         try:    
@@ -60,16 +60,19 @@ def Output():
     global password
     password = GenPassword(passLength)
     print('Your password is: ' + password)
-    
-def SavePassword():
-    #password_path = Path(r"E:\Users\Jayden\Desktop\Code\Python\Password Generator\Passwords.txt", 'r+')
-    Ledger = open('Passwords.txt', 'a+')
+
+# Rewrite function to confirm a password to save or regenerate a password and save and or delete    
+def SavePassword(password):
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    file_path = os.path.join(script_dir, 'Passwords.txt')
+    with open('Passwords.txt', 'a') as file:
+        file.write(f'{password}\n')
 
 
 Welcome()
 GetPassLength()
 Output()
-SavePassword()
+SavePassword(password)
 
 
 
