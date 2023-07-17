@@ -31,10 +31,10 @@ from tkinter import messagebox
 #
 #root.mainloop()
 
+passLength = 0
+
 def Welcome():
     print("Welcome to PassGen  \n")
-
-passLength = 0
 
 #Make a condition to limit the amount of characters, like 24 characters
 def GetPassLength():
@@ -47,27 +47,33 @@ def GetPassLength():
             print("Please enter an integer...")
     
 def GenPassword(length):
-    
-    #Possible characters in the password
     characters = string.ascii_letters + string.digits + string.punctuation
-
-    #generates password with defined characters 
     password = ''.join(random.choice(characters) for i in range(length))
-    
     return password
 
 def Output():
     global password
     password = GenPassword(passLength)
-    print('Your password is: ' + password)
+    print('Your password is: ' + password + '\n')
 
 # Rewrite function to confirm a password to save or regenerate a password and save and or delete    
 def SavePassword(password):
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(script_dir, 'Passwords.txt')
-    with open('Passwords.txt', 'a') as file:
-        file.write(f'{password}\n')
-
+    ynRewind = input("Would you like to save this password? (y/n): ")
+    if ynRewind == 'y':
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(script_dir, 'Passwords.txt')
+        print('Your password is: ' + password + '\n')
+        print("Password has been saved as: " + password)
+        with open('Passwords.txt', 'a') as file:
+            file.write(f'{password}\n')
+    elif ynRewind == 'n':
+        Output()
+        SavePassword(password)
+        print("Password has been regenerated as: " + password)
+    else:
+        print("Invalid input. Please enter Y, y, N, or n... \n")
+        SavePassword(password)
+    
 
 Welcome()
 GetPassLength()
