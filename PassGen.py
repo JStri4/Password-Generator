@@ -32,6 +32,10 @@ from tkinter import messagebox
 #root.mainloop()
 
 passLength = 0
+#passwordID = 0
+#site = None
+#username = None
+filePath = os.path.dirname(os.path.realpath(__file__))
 
 def Welcome():
     print("Welcome to PassGen  \n")
@@ -55,35 +59,97 @@ def Output():
     global password
     password = GenPassword(passLength)
     print('Your password is: ' + password + '\n')
-
-# Rewrite function to confirm a password to save or regenerate a password and save and or delete    
+  
 def SavePassword(password):
     ynRewind = input("Would you like to save this password? (y/n): ")
     if ynRewind == 'y':
-        script_dir = os.path.dirname(os.path.realpath(__file__))
+        script_dir = filePath
         file_path = os.path.join(script_dir, 'Passwords.txt')
         print('Your password is: ' + password + '\n')
         print("Password has been saved as: " + password)
         with open('Passwords.txt', 'a') as file:
             file.write(f'{password}\n')
+        MainMenu()
+        
     elif ynRewind == 'n':
         Output()
         SavePassword(password)
         print("Password has been regenerated as: " + password)
     else:
-        print("Invalid input. Please enter Y, y, N, or n... \n")
+        print("Invalid input. Please enter y or n... \n")
         SavePassword(password)
+
+def ViewPasswords():
+    script_dir = filePath
+    file_path = os.path.join(script_dir, 'Passwords.txt')
     
+    if not os.path.exists(file_path):
+        print("Passwords file does not exist, check again or create Passwords.txt...")
+        return
 
-Welcome()
-GetPassLength()
-Output()
-SavePassword(password)
+    with open(file_path, 'r') as file:
+        for line in file:
+            password = line.strip().split(':')
+            print(f'Password: {password}')
+            
+def DeletePasswords(index):
+    script_dir = filePath
+    with open("passwords.txt", "r") as file:
+        passwords = file.readlines()
+    
+    if 1 <= index <= len(passwords):
+        deleted_password = passwords.pop(index - 1)
+        with open("Passwords.txt", "w") as file:
+            file.writelines(passwords)
+        print(f"Deleted password: {deleted_password.strip()}")
+    else:
+        print("Invalid index.") 
+    
+def Skeleton():
+    GetPassLength()
+    Output()
+    SavePassword(password)
+
+def MainMenu():
+    print("----Main Menu----\n",
+          "1. Generate new password\n",
+          "2. View passwords\n",
+          "3. Delete old password\n",)
+    choice = input("Choose: ")
+    if choice == '1':
+        Skeleton()
+    elif choice == '2':
+        ViewPasswords()
+    elif choice == '3':
+        DeletePasswords()
+    elif choice == '4':
+        quit()
+    else:
+        print("Invalid choice. Please select again.")
+        MainMenu()
+        
+    
+def Main():
+    Welcome()
+    MainMenu()
+    
+Main()
+
+# add an update password function
+# add a generate new password function
+# tie certain functions/actions to numbered inputs
 
 
 
 
 
+
+
+#class PasswordClass:
+#    global PasswordID 
+#    PassActual = password
+#    Website = site
+#    name = username
 
 
 # file io
