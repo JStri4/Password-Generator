@@ -114,7 +114,9 @@ def MainMenu():
     print("----Main Menu----\n",
           "1. Generate new password\n",
           "2. View passwords\n",
-          "3. Delete old password\n",)
+          "3. Delete old password\n",
+          "4. Quit\n")
+    
     choice = input("Choose: ")
     if choice == '1':
         Skeleton()
@@ -123,7 +125,7 @@ def MainMenu():
     elif choice == '3':
         DeletePasswords()
     elif choice == '4':
-        quit()
+        exit()
     else:
         print("Invalid choice. Please select again.")
         MainMenu()
